@@ -1,0 +1,6 @@
+com/satelliteconstellation/app/entity/SatelliteInfo.class
+com/satelliteconstellation/app/SatelliteApp.class
+com/satelliteconstellation/app/controller/ApplicationHealthController.class
+com/satelliteconstellation/app/repository/SatelliteInfoRepository.class
+com/satelliteconstellation/app/utils/SatelliteUtils.class
+com/satelliteconstellation/app/controller/SatelliteInfoController.class

@@ -1,0 +1,50 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: satellite-constellation
+  labels:
+    name: satellite-constellation
+spec:
+  ports:
+    - nodePort: 30164
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: satellite-constellation
+  type: NodePort
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: satellite-constellation
+spec:
+  selector:
+    matchLabels:
+      app: satellite-constellation
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: satellite-constellation
+    spec:
+      containers:
+        - name: satellite-constellation
+          image: 513125981122.dkr.ecr.us-east-1.amazonaws.com/satellite_constellation:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_HOSTNAME
+              value: "mysql"
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_NAME
+              value: "Satellite"
+            - name: DB_USERNAME
+              value: "sqladmin"
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-password
+                  key: dbreader
